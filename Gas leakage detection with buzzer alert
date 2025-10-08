@@ -1,0 +1,29 @@
+int gasSensor = A0;   // MQ-2 Sensor pin
+int buzzer = 8;       // Buzzer pin
+int led = 7;          // LED pin
+int threshold = 400;  // Gas limit value
+
+void setup() {
+  pinMode(gasSensor, INPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(led, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Gas Leakage Detection System");
+}
+
+void loop() {
+  int gasValue = analogRead(gasSensor);
+  Serial.print("Gas Level: ");
+  Serial.println(gasValue);
+
+  if (gasValue > threshold) {
+    digitalWrite(buzzer, HIGH);
+    digitalWrite(led, HIGH);
+    Serial.println("⚠️ Gas Leakage Detected!");
+  } else {
+    digitalWrite(buzzer, LOW);
+    digitalWrite(led, LOW);
+  }
+
+  delay(500);
+}
